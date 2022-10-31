@@ -3,7 +3,7 @@
 A weather website that displays weather information for any location using OpenWeather API and I'm going to try and make it look pretty :)
 
 Important:
-You need an API from openweathermap.org in order for this to work.
+You need an API Key from openweathermap.org in order for this to work.
 
 1. Create Openweather account.
 2. Create API Key
