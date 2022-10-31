@@ -32,8 +32,8 @@ def base():
             lat = data['coord']['lat']
 
             print(data)
-            print(weather)
-            print(temperature)
+            print(lon)
+            print(lat)
         else:
             print("Error");
 
