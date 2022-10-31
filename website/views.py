@@ -28,6 +28,9 @@ def base():
             cloud_percentage = data['clouds']['all']
             country = data['sys']['country']
             city = data['name']
+            lon = data['coord']['lon']
+            lat = data['coord']['lat']
+
             print(data)
             print(weather)
             print(temperature)
