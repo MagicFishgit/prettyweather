@@ -34,6 +34,8 @@ def base():
             print(data)
             print(lon)
             print(lat)
+
+            return render_template("base.html",longitude=lon, latitude=lat)
         else:
             print("Error");
 

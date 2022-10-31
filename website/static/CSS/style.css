@@ -5,6 +5,10 @@
   padding: 0%;
 }
 
+.container-fluid {
+  padding: 0%;
+}
+
 .info-container {
   background-color: skyblue;
   color: white;
