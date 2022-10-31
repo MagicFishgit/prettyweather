@@ -39,4 +39,7 @@ def base():
         else:
             print("Error");
 
-    return render_template("base.html")
+    #If not loading by POST supply default lat long. -33.95623812649303, 18.617579341316596
+    lon = "18.61"
+    lat = "-33.95"
+    return render_template("base.html",longitude=lon, latitude=lat)
