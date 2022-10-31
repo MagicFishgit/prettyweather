@@ -12,7 +12,7 @@
             let lat = JSON.parse('{{ latitude | tojson }}');
 
             let params = {
-                center: new google.maps.LatLng(lat, long), zoom : 14,
+                center: new google.maps.LatLng(lat, long), zoom : 13,
                 mapId: '9e5e8d5afac14deb',
                 disableDefaultUI: true
             };
@@ -24,18 +24,24 @@
   <body>
     <!--Main Content replaceable by jinja-->
     {% block maincontent %}
+    <div class="map-background" id="map-background"></div>
         <div class="container-fluid">
-            <div class="map-background" id="map-background"></div>
             <div class="row">
-                <div class="d-flex justify-content-center"> 
+                <div class="d-flex justify-content-center info-container"> 
                     <div class="col-md-3">
                         <form method="POST">
                             <div class="input-group">
-                                <input type="text" class="form-control" id="searchTerm" name="searchTerm">
+                                <input type="text" class="form-control" id="searchTerm" name="searchTerm" placeholder="ex. durbanville, cape town">
                                 <button class="btn btn-outline-secondary" type="submit">Search Weather</button>
                             </div>
                         </form>
                     </div>
+                </div>
+                <div class="info-container-2">
+                  <div class="row">
+                    <div class="col-md-4" style="background-color: rgb(72, 206, 240);">test1</div>
+                    <div class="col-md-8" style="background-color: rgb(42, 226, 73);">test2</div>
+                  </div>
                 </div> 
             </div>
         </div>

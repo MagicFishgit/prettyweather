@@ -10,13 +10,21 @@
 }
 
 .info-container {
-  background-color: skyblue;
-  color: white;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+}
+
+.info-container-2 {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 15%;
 }
 
 .input-group {
-  width: 30rem;
+  width: 22rem;
   margin-top: 3rem;
-  position: absolute;
-  top: 0%;
+  position: relative;
 }/*# sourceMappingURL=style.css.map */
