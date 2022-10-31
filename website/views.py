@@ -2,7 +2,9 @@
 from urllib import response
 from flask import Blueprint, render_template, request
 import requests
-API_KEY = "a709e0c27e22c8f1954335d792ddfda9"
+from creds import openweather_api_key
+
+API_KEY = openweather_api_key
 BASE_URL = "https://api.openweathermap.org/data/2.5/weather" 
 
 views = Blueprint('views', __name__)
