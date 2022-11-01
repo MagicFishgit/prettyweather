@@ -38,7 +38,7 @@ def base():
             weather_icon = None
 
             if weather_main == "Clear":
-                weather_icon == "fa-sun-bright"
+                weather_icon == "fa-sun"
             elif weather_main == "Clouds":
                 weather_icon = "fa-cloud"
             elif weather_main == "Thunderstorm":
