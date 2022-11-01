@@ -43,22 +43,14 @@ def base():
                 for d in data['daily']:
                     forecast.append(Weather(d, "daily"))
 
-                
-
-                print(curr_weather.temp)
             else:
                 print(response.status_code)
                 print(response.reason)
                 
-            print("TEST:")
-            print(data_lon,data_lat)
-
-            #Determine weather icon
-            #weather_icon = get_icon(weather_main)
-
-            return render_template("base.html",longitude=18.61, latitude=-33.95)
+            return render_template("base.html",longitude = data_lon, latitude = data_lat, curr_weather = curr_weather, forecast = forecast)
         else:
-            print("Error")
+            print(response.status_code)
+            print(response.reason)
 
     #If not loading by POST supply default lat long. -33.95623812649303, 18.617579341316596
     lon = "18.61"
