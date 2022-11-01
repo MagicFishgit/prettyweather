@@ -38,6 +38,11 @@ def base():
                 #Get current data
                 curr_weather = Weather(data, "current")
 
+                #Get daily forecast data
+                forecast = []
+                for d in data['daily']:
+                    forecast.append(Weather(d, "daily"))
+
                 
 
                 print(curr_weather.temp)
@@ -64,7 +69,6 @@ class Weather:
 
     def __init__(self, weather_dict, period):
         self.period = period
-        self.time_zone = weather_dict['timezone']
         
         if period == "current":
             self.date = Date(weather_dict[period].get("dt"))
@@ -78,8 +82,8 @@ class Weather:
             self.uvi = weather_dict[period]['uvi']
             self.wind_speed = weather_dict[period]['wind_speed']
             self.wind_deg = weather_dict[period]['wind_deg']
-            self.weather_main = weather_dict[period]['weather'][0]['main']
-            self.weather_desc = weather_dict[period]['weather'][0]['description']
+            self.weather_main = weather_dict[period]['weather'][0].get("main")
+            self.weather_desc = weather_dict[period]['weather'][0].get("description")
             self.weather_icon = get_icon(self.weather_main)
         else:
             self.date = Date(weather_dict['dt'])
@@ -95,8 +99,8 @@ class Weather:
             self.uvi = weather_dict['uvi']
             self.wind_speed = weather_dict['wind_speed']
             self.wind_deg = weather_dict['wind_deg']
-            self.weather_main = weather_dict['weather'].get("main")
-            self.weather_desc = weather_dict['weather'].get("description")
+            self.weather_main = weather_dict['weather'][0].get("main")
+            self.weather_desc = weather_dict['weather'][0].get("description")
             self.weather_icon = get_icon(self.weather_main)
             
 
