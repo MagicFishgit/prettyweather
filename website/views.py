@@ -1,7 +1,9 @@
+from unittest import case
 from urllib import response
 from flask import Blueprint, render_template, request
 import requests
 from creds import openweather_api_key
+import datetime
 
 API_KEY = openweather_api_key
 BASE_URL = "https://api.openweathermap.org/data/3.0/onecall"
@@ -33,7 +35,12 @@ def base():
             if response.status_code == 200:
                 data = response.json()
 
-                print(data)
+                #Get current data
+                curr_weather = Weather(data, "current")
+
+                
+
+                print(curr_weather.temp)
             else:
                 print(response.status_code)
                 print(response.reason)
@@ -53,39 +60,88 @@ def base():
     lat = "-33.95"
     return render_template("base.html",longitude=18.61, latitude=-33.95)
 
-def parse_data(flag, data):
+class Weather:
 
-    #Extracted values
-    parsed_data_dict = {
-        "weather" : "",
-        "weather_main" : "",
-        "temp_curr" : "",
-        "feels_like" : "",
-        "temp_min" : "",
-        "temp_max" : "",
-        "pressure" : "",
-        "humidity" : "",
-        "visibility" : "",
-        "wind_speed" : "",
-        "cloud_percentage" : "",
-        "country" : "",
-        "city" : "",
-        "lon" : "",
-        "lat" : ""
-    }
-    
-    #Flag = 0 for current data.
-    #Flag = 1 for 5 day forecast.
-    if flag == 0:
-        pass
-    elif flag == 1:
-        pass
+    def __init__(self, weather_dict, period):
+        self.period = period
+        self.time_zone = weather_dict['timezone']
+        
+        if period == "current":
+            self.date = Date(weather_dict[period].get("dt"))
+            self.sunrise = Date(weather_dict[period]['sunrise'])
+            self.sunset = Date(weather_dict[period]['sunset'])
+            self.temp = weather_dict[period]['temp']
+            self.feels_like = weather_dict[period]['feels_like']
+            self.pressure = weather_dict[period]['pressure']
+            self.humidity = weather_dict[period]['humidity']
+            self.clouds = weather_dict[period]['clouds']
+            self.uvi = weather_dict[period]['uvi']
+            self.wind_speed = weather_dict[period]['wind_speed']
+            self.wind_deg = weather_dict[period]['wind_deg']
+            self.weather_main = weather_dict[period]['weather'][0]['main']
+            self.weather_desc = weather_dict[period]['weather'][0]['description']
+            self.weather_icon = get_icon(self.weather_main)
+        else:
+            self.date = Date(weather_dict['dt'])
+            self.sunrise = Date(weather_dict['sunrise'])
+            self.sunset = Date(weather_dict['sunset'])
+            self.temp = weather_dict['temp'].get("day")
+            self.temp_min = weather_dict['temp'].get("min")
+            self.temp_max = weather_dict['temp'].get("max")
+            self.feels_like = weather_dict['feels_like'].get("day")
+            self.pressure = weather_dict['pressure']
+            self.humidity = weather_dict['humidity']
+            self.clouds = weather_dict['clouds']
+            self.uvi = weather_dict['uvi']
+            self.wind_speed = weather_dict['wind_speed']
+            self.wind_deg = weather_dict['wind_deg']
+            self.weather_main = weather_dict['weather'].get("main")
+            self.weather_desc = weather_dict['weather'].get("description")
+            self.weather_icon = get_icon(self.weather_main)
+            
 
-def get_icon(weather_check):
+class Date:
+
+    def __init__(self, utc_stamp):
+
+        self.datetime_obj = datetime.datetime.fromtimestamp(utc_stamp)
+        self.day = self.datetime_obj.day
+        self.month = self.datetime_obj.month
+        self.month_name = self.get_month_name(self.month)
+        self.year = self.datetime_obj.year
+        self.hour = self.datetime_obj.hour
+        self.minute = self.datetime_obj.minute
     
-    #Determine weather icon
-    weather_icon = None
-    weather_main = weather_check
+    def get_month_name(self, month):
+        
+        if month == 1:
+            return "Jan"
+        elif month == 2:
+            return "Feb"
+        elif month == 3:
+            return "Mar"
+        elif month == 4:
+            return "Apr"
+        elif month == 5:
+            return "May"
+        elif month == 6:
+            return "Jun"
+        elif month == 7:
+            return "Jul"
+        elif month == 8:
+            return "Aug"
+        elif month == 9:
+            return "Sep"
+        elif month == 10:
+            return "Oct"
+        elif month == 11:
+            return "Nov"
+        else: return "Dec"
+
+def get_icon(weather_main):
+    
+    #Determine weather icon. For some reason python won't set the Clear condition value even if it is true but everything else it will.
+    weather_icon = "fa-sun"
 
     if weather_main == "Clear":
         weather_icon == "fa-sun"
