@@ -1,11 +1,13 @@
-
+from unittest import case
 from urllib import response
 from flask import Blueprint, render_template, request
 import requests
 from creds import openweather_api_key
+import datetime
 
 API_KEY = openweather_api_key
-BASE_URL = "https://api.openweathermap.org/data/2.5/weather" 
+BASE_URL = "https://api.openweathermap.org/data/3.0/onecall"
+LOCATION_URL = "http://api.openweathermap.org/geo/1.0/direct" 
 
 views = Blueprint('views', __name__)
 
@@ -13,68 +15,157 @@ views = Blueprint('views', __name__)
 def base():
     if request.method == "POST":
         search_location = request.form.get('searchTerm')
-        request_url = f"{BASE_URL}?appid={API_KEY}&q={search_location}"
-        response = requests.get(request_url)
+        data_lon = None
+        data_lat = None
+        exclude = "minute,hourly"
+        location_request_url = f"{LOCATION_URL}?q={search_location}&limit=1&appid={API_KEY}"
+
+        #Get coordinates for onecall API
+        response = requests.get(location_request_url)
 
         if response.status_code == 200:
             data = response.json()
-            weather = data['weather'][0]['description']
-            weather_main = data['weather'][0]['main']
-            temperature = round(data['main']['temp'] - 273.15)
-            feels_like = round(data['main']['feels_like'] - 273.15)
-            temp_min = round(data['main']['temp_min'] - 273.15)
-            temp_max = round(data['main']['temp_max'] - 273.15)
-            pressure = data['main']['pressure']
-            humidity = data['main']['humidity']
-            visibility = data['visibility']
-            wind_speed = data['wind']['speed']
-            cloud_percentage = data['clouds']['all']
-            country = data['sys']['country']
-            city = data['name']
-            lon = data['coord']['lon']
-            lat = data['coord']['lat']
+            data_lat = data[0]['lat']
+            data_lon = data[0]['lon']
 
-            #Determine weather icon
-            weather_icon = None
+            onecall_request_url = f"{BASE_URL}?lat={data_lat}&lon={data_lon}&exclude={exclude}&appid={API_KEY}"
+            #Make onecall API call with location data
+            response = requests.get(onecall_request_url)
 
-            if weather_main == "Clear":
-                weather_icon == "fa-sun"
-            elif weather_main == "Clouds":
-                weather_icon = "fa-cloud"
-            elif weather_main == "Thunderstorm":
-                weather_icon = "fa-bolt"
-            elif weather_main == "Drizzle":
-                weather_icon = "fa-cloud-rain"
-            elif weather_main == "Rain":
-                weather_icon = "fa-cloud-showers-heavy"
-            elif weather_main == "Snow":
-                weather_icon = "fa-snow-flake"
-            elif weather_main == "Mist":
-                weather_icon = "fa-cloud-fog"
-            elif weather_main == "Smoke":
-                weather_icon = "fa-smoke"
-            elif weather_main == "Haze":
-                weather_icon = "fa-sun-haze"
-            elif weather_main == "Dust":
-                weather_icon = "fa-sun-dust"
-            elif weather_main == "Fog":
-                weather_icon = "fa-cloud-fog"
-            elif weather_main == "Ash":
-                weather_icon = "fa-fire-smoke"
-            elif weather_main == "Squall":
-                weather_icon = "fa-cloud-bolt-sun"
+            if response.status_code == 200:
+                data = response.json()
+
+                #Get current data
+                curr_weather = Weather(data, "current")
+
+                #Get daily forecast data
+                forecast = []
+                for d in data['daily']:
+                    forecast.append(Weather(d, "daily"))
+
             else:
-                weather_icon = "fa-tornado"
-
-            print(data)
-            print(lon)
-            print(lat)
-
-            return render_template("base.html",longitude=lon, latitude=lat, city_name=city, temp=temperature, min_temp=temp_min, max_temp=temp_max, fa_icon=weather_icon, weather_desc= weather)
+                print(response.status_code)
+                print(response.reason)
+                
+            return render_template("base.html",longitude = data_lon, latitude = data_lat, curr_weather = curr_weather, forecast = forecast)
         else:
-            print("Error");
+            print(response.status_code)
+            print(response.reason)
 
     #If not loading by POST supply default lat long. -33.95623812649303, 18.617579341316596
     lon = "18.61"
     lat = "-33.95"
-    return render_template("base.html",longitude=lon, latitude=lat)
+    return render_template("base.html",longitude=18.61, latitude=-33.95)
+
+class Weather:
+
+    def __init__(self, weather_dict, period):
+        self.period = period
+        
+        if period == "current":
+            self.date = Date(weather_dict[period].get("dt"))
+            self.sunrise = Date(weather_dict[period]['sunrise'])
+            self.sunset = Date(weather_dict[period]['sunset'])
+            self.temp = weather_dict[period]['temp']
+            self.feels_like = weather_dict[period]['feels_like']
+            self.pressure = weather_dict[period]['pressure']
+            self.humidity = weather_dict[period]['humidity']
+            self.clouds = weather_dict[period]['clouds']
+            self.uvi = weather_dict[period]['uvi']
+            self.wind_speed = weather_dict[period]['wind_speed']
+            self.wind_deg = weather_dict[period]['wind_deg']
+            self.weather_main = weather_dict[period]['weather'][0].get("main")
+            self.weather_desc = weather_dict[period]['weather'][0].get("description")
+            self.weather_icon = get_icon(self.weather_main)
+        else:
+            self.date = Date(weather_dict['dt'])
+            self.sunrise = Date(weather_dict['sunrise'])
+            self.sunset = Date(weather_dict['sunset'])
+            self.temp = weather_dict['temp'].get("day")
+            self.temp_min = weather_dict['temp'].get("min")
+            self.temp_max = weather_dict['temp'].get("max")
+            self.feels_like = weather_dict['feels_like'].get("day")
+            self.pressure = weather_dict['pressure']
+            self.humidity = weather_dict['humidity']
+            self.clouds = weather_dict['clouds']
+            self.uvi = weather_dict['uvi']
+            self.wind_speed = weather_dict['wind_speed']
+            self.wind_deg = weather_dict['wind_deg']
+            self.weather_main = weather_dict['weather'][0].get("main")
+            self.weather_desc = weather_dict['weather'][0].get("description")
+            self.weather_icon = get_icon(self.weather_main)
+            
+
+class Date:
+
+    def __init__(self, utc_stamp):
+
+        self.datetime_obj = datetime.datetime.fromtimestamp(utc_stamp)
+        self.day = self.datetime_obj.day
+        self.month = self.datetime_obj.month
+        self.month_name = self.get_month_name(self.month)
+        self.year = self.datetime_obj.year
+        self.hour = self.datetime_obj.hour
+        self.minute = self.datetime_obj.minute
+    
+    def get_month_name(self, month):
+        
+        if month == 1:
+            return "Jan"
+        elif month == 2:
+            return "Feb"
+        elif month == 3:
+            return "Mar"
+        elif month == 4:
+            return "Apr"
+        elif month == 5:
+            return "May"
+        elif month == 6:
+            return "Jun"
+        elif month == 7:
+            return "Jul"
+        elif month == 8:
+            return "Aug"
+        elif month == 9:
+            return "Sep"
+        elif month == 10:
+            return "Oct"
+        elif month == 11:
+            return "Nov"
+        else: return "Dec"
+
+def get_icon(weather_main):
+    
+    #Determine weather icon. For some reason python won't set the Clear condition value even if it is true but everything else it will.
+    weather_icon = "fa-sun"
+
+    if weather_main == "Clear":
+        weather_icon == "fa-sun"
+    elif weather_main == "Clouds":
+        weather_icon = "fa-cloud"
+    elif weather_main == "Thunderstorm":
+        weather_icon = "fa-bolt"
+    elif weather_main == "Drizzle":
+        weather_icon = "fa-cloud-rain"
+    elif weather_main == "Rain":
+        weather_icon = "fa-cloud-showers-heavy"
+    elif weather_main == "Snow":
+        weather_icon = "fa-snow-flake"
+    elif weather_main == "Mist":
+        weather_icon = "fa-cloud-fog"
+    elif weather_main == "Smoke":
+        weather_icon = "fa-smoke"
+    elif weather_main == "Haze":
+        weather_icon = "fa-sun-haze"
+    elif weather_main == "Dust":
+        weather_icon = "fa-sun-dust"
+    elif weather_main == "Fog":
+        weather_icon = "fa-cloud-fog"
+    elif weather_main == "Ash":
+        weather_icon = "fa-fire-smoke"
+    elif weather_main == "Squall":
+        weather_icon = "fa-cloud-bolt-sun"
+    else:
+        weather_icon = "fa-tornado"
+    
+    return weather_icon
