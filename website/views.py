@@ -17,16 +17,16 @@ def base():
         data_lat = None
         exclude = "minute,hourly"
         location_request_url = f"{LOCATION_URL}?q={search_location}&limit=1&appid={API_KEY}"
-        onecall_request_url = f"{BASE_URL}?lat={data_lat}&lon={data_lon}&exclude={exclude}&appid={API_KEY}"
 
         #Get coordinates for onecall API
         response = requests.get(location_request_url)
 
         if response.status_code == 200:
             data = response.json()
-            data_lon = data[0]['lon']
             data_lat = data[0]['lat']
+            data_lon = data[0]['lon']
 
+            onecall_request_url = f"{BASE_URL}?lat={data_lat}&lon={data_lon}&exclude={exclude}&appid={API_KEY}"
             #Make onecall API call with location data
             response = requests.get(onecall_request_url)
 
