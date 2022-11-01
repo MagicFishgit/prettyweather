@@ -47,7 +47,7 @@ def base():
                 print(response.status_code)
                 print(response.reason)
                 
-            return render_template("base.html",longitude = data_lon, latitude = data_lat, curr_weather = curr_weather, forecast = forecast)
+            return render_template("base.html",longitude = data_lon, latitude = data_lat, curr_weather = curr_weather, forecast = forecast, location_name = search_location)
         else:
             print(response.status_code)
             print(response.reason)
