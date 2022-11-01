@@ -47,7 +47,7 @@ def base():
                 print(response.status_code)
                 print(response.reason)
                 
-            return render_template("base.html",longitude = data_lon, latitude = data_lat, curr_weather = curr_weather, forecast = forecast)
+            return render_template("base.html",longitude = data_lon, latitude = data_lat, curr_weather = curr_weather, forecast = forecast, location_name = search_location)
         else:
             print(response.status_code)
             print(response.reason)
@@ -66,8 +66,8 @@ class Weather:
             self.date = Date(weather_dict[period].get("dt"))
             self.sunrise = Date(weather_dict[period]['sunrise'])
             self.sunset = Date(weather_dict[period]['sunset'])
-            self.temp = weather_dict[period]['temp']
-            self.feels_like = weather_dict[period]['feels_like']
+            self.temp = round(weather_dict[period]['temp'] - 273.15, 1)
+            self.feels_like = round(weather_dict[period]['feels_like'] - 273.15, 1)
             self.pressure = weather_dict[period]['pressure']
             self.humidity = weather_dict[period]['humidity']
             self.clouds = weather_dict[period]['clouds']
@@ -81,10 +81,10 @@ class Weather:
             self.date = Date(weather_dict['dt'])
             self.sunrise = Date(weather_dict['sunrise'])
             self.sunset = Date(weather_dict['sunset'])
-            self.temp = weather_dict['temp'].get("day")
-            self.temp_min = weather_dict['temp'].get("min")
-            self.temp_max = weather_dict['temp'].get("max")
-            self.feels_like = weather_dict['feels_like'].get("day")
+            self.temp = round(weather_dict['temp'].get("day") - 273.15, 1)
+            self.temp_min = round(weather_dict['temp'].get("min") - 273.15, 1)
+            self.temp_max = round(weather_dict['temp'].get("max") - 273.15, 1)
+            self.feels_like = round(weather_dict['feels_like'].get("day") - 273.15, 1)
             self.pressure = weather_dict['pressure']
             self.humidity = weather_dict['humidity']
             self.clouds = weather_dict['clouds']

@@ -42,100 +42,100 @@
                   <div class="row">
                     <div class="col-md-4">
                       <div class="bg-dark bg-opacity-50 py-3">
-                        <h2 class="card-title">{{city_name}}</h2>
+                        <h2 class="card-title">{{location_name}}</h2>
                         <p class="card-text lead">
-                          Thursday, October 14, 2021
+                          {{curr_weather.date.day}} {{curr_weather.date.month_name}} {{curr_weather.date.year}}
                         </p>
                         <hr />
-                        <i class="fas {{fa_icon}} fa-4x"></i>
-                        <h1 class="fw-bolder mb-5">{{temp}} &deg;C</h1>
-                        <p class="lead fw-bolder mb-0">{{weather_desc}}</p>
-                        <p class="lead">{{min_temp}}&deg;C | {{max_temp}}&deg;C</p>
+                        <i class="fas {{curr_weather.weather_icon}} fa-4x"></i>
+                        <h1 class="fw-bolder mb-5">{{curr_weather.temp}} &deg;C</h1>
+                        <p class="lead fw-bolder mb-0">{{curr_weather.weather_desc}}</p>
+                        <p class="lead">{{forecast[0].temp_min}}&deg;C | {{forecast[0].temp_max}}&deg;C</p>
                       </div>
                     </div>
                     <div class="col-md-8">
                       <div class="row">
                         <div class="col-md-2">
                           <div class="bg-dark bg-opacity-50 py-2">
-                            <h2 class="card-title">Tuesday</h2>
-                            <p class="lead">{{min_temp}}&deg;C | {{max_temp}}&deg;C</p>
+                            <h2 class="card-title">{{forecast[1].temp}}&deg;C</h2>
+                            <p class="lead">{{forecast[1].temp_min}}&deg;C | {{forecast[1].temp_max}}&deg;C</p>
                             <hr />
-                            <i class="fas {{fa_icon}} fa-4x"></i>
-                            <p class="lead fw-bolder mb-0">{{weather_desc}}</p>
-                            <h7 class="lead">sunrise | 02:53</h7><br>
-                            <h7>sunset | 18:00</h7>
+                            <i class="fas {{forecast[1].weather_icon}} fa-4x"></i>
+                            <p class="lead fw-bolder mb-0">{{forecast[1].weather_desc}}</p>
+                            <h7 class="lead">sunrise | {{forecast[1].sunrise.hour}}:{{forecast[1].sunrise.minute}}</h7><br>
+                            <h7>sunset | {{forecast[1].sunset.hour}}:{{forecast[1].sunset.minute}}</h7>
                             <hr />
-                            <h2 class="fw-bolder">01 Nov</h2>
-                            <hr />
-                          </div>
-                        </div>
-                        <div class="col-md-2">
-                          <div class="bg-dark bg-opacity-50 py-2">
-                            <h2 class="card-title">Tuesday</h2>
-                            <p class="lead">{{min_temp}}&deg;C | {{max_temp}}&deg;C</p>
-                            <hr />
-                            <i class="fas {{fa_icon}} fa-4x"></i>
-                            <p class="lead fw-bolder mb-0">{{weather_desc}}</p>
-                            <h7 class="lead">sunrise | 02:53</h7><br>
-                            <h7>sunset | 18:00</h7>
-                            <hr />
-                            <h2 class="fw-bolder">01 Nov</h2>
+                            <h2 class="fw-bolder">{{forecast[1].date.day}} {{forecast[1].date.month_name}}</h2>
                             <hr />
                           </div>
                         </div>
                         <div class="col-md-2">
                           <div class="bg-dark bg-opacity-50 py-2">
-                            <h2 class="card-title">Tuesday</h2>
-                            <p class="lead">{{min_temp}}&deg;C | {{max_temp}}&deg;C</p>
+                            <h2 class="card-title">{{forecast[2].temp}}&deg;C</h2>
+                            <p class="lead">{{forecast[2].temp_min}}&deg;C | {{forecast[2].temp_max}}&deg;C</p>
                             <hr />
-                            <i class="fas {{fa_icon}} fa-4x"></i>
-                            <p class="lead fw-bolder mb-0">{{weather_desc}}</p>
-                            <h7 class="lead">sunrise | 02:53</h7><br>
-                            <h7>sunset | 18:00</h7>
+                            <i class="fas {{forecast[2].weather_icon}} fa-4x"></i>
+                            <p class="lead fw-bolder mb-0">{{forecast[2].weather_desc}}</p>
+                            <h7 class="lead">sunrise | {{forecast[2].sunrise.hour}}:{{forecast[2].sunrise.minute}}</h7><br>
+                            <h7>sunset | {{forecast[2].sunset.hour}}:{{forecast[2].sunset.minute}}</h7>
                             <hr />
-                            <h2 class="fw-bolder">01 Nov</h2>
-                            <hr />
-                          </div>
-                        </div>
-                        <div class="col-md-2">
-                          <div class="bg-dark bg-opacity-50 py-2">
-                            <h2 class="card-title">Tuesday</h2>
-                            <p class="lead">{{min_temp}}&deg;C | {{max_temp}}&deg;C</p>
-                            <hr />
-                            <i class="fas {{fa_icon}} fa-4x"></i>
-                            <p class="lead fw-bolder mb-0">{{weather_desc}}</p>
-                            <h7 class="lead">sunrise | 02:53</h7><br>
-                            <h7>sunset | 18:00</h7>
-                            <hr />
-                            <h2 class="fw-bolder">01 Nov</h2>
+                            <h2 class="fw-bolder">{{forecast[2].date.day}} {{forecast[2].date.month_name}}</h2>
                             <hr />
                           </div>
                         </div>
                         <div class="col-md-2">
                           <div class="bg-dark bg-opacity-50 py-2">
-                            <h2 class="card-title">Tuesday</h2>
-                            <p class="lead">{{min_temp}}&deg;C | {{max_temp}}&deg;C</p>
+                            <h2 class="card-title">{{forecast[3].temp}}&deg;C</h2>
+                            <p class="lead">{{forecast[3].temp_min}}&deg;C | {{forecast[3].temp_max}}&deg;C</p>
                             <hr />
-                            <i class="fas {{fa_icon}} fa-4x"></i>
-                            <p class="lead fw-bolder mb-0">{{weather_desc}}</p>
-                            <h7 class="lead">sunrise | 02:53</h7><br>
-                            <h7>sunset | 18:00</h7>
+                            <i class="fas {{forecast[3].weather_icon}} fa-4x"></i>
+                            <p class="lead fw-bolder mb-0">{{forecast[3].weather_desc}}</p>
+                            <h7 class="lead">sunrise | {{forecast[3].sunrise.hour}}:{{forecast[3].sunrise.minute}}</h7><br>
+                            <h7>sunset | {{forecast[3].sunset.hour}}:{{forecast[3].sunset.minute}}</h7>
                             <hr />
-                            <h2 class="fw-bolder">01 Nov</h2>
+                            <h2 class="fw-bolder">{{forecast[3].date.day}} {{forecast[3].date.month_name}}</h2>
                             <hr />
                           </div>
                         </div>
                         <div class="col-md-2">
                           <div class="bg-dark bg-opacity-50 py-2">
-                            <h2 class="card-title">Tuesday</h2>
-                            <p class="lead">{{min_temp}}&deg;C | {{max_temp}}&deg;C</p>
+                            <h2 class="card-title">{{forecast[4].temp}}&deg;C</h2>
+                            <p class="lead">{{forecast[4].temp_min}}&deg;C | {{forecast[4].temp_max}}&deg;C</p>
                             <hr />
-                            <i class="fas {{fa_icon}} fa-4x"></i>
-                            <p class="lead fw-bolder mb-0">{{weather_desc}}</p>
-                            <h7 class="lead">sunrise | 02:53</h7><br>
-                            <h7>sunset | 18:00</h7>
+                            <i class="fas {{forecast[4].weather_icon}} fa-4x"></i>
+                            <p class="lead fw-bolder mb-0">{{forecast[4].weather_desc}}</p>
+                            <h7 class="lead">sunrise | {{forecast[4].sunrise.hour}}:{{forecast[4].sunrise.minute}}</h7><br>
+                            <h7>sunset | {{forecast[4].sunset.hour}}:{{forecast[4].sunset.minute}}</h7>
                             <hr />
-                            <h2 class="fw-bolder">01 Nov</h2>
+                            <h2 class="fw-bolder">{{forecast[4].date.day}} {{forecast[4].date.month_name}}</h2>
+                            <hr />
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="bg-dark bg-opacity-50 py-2">
+                            <h2 class="card-title">{{forecast[5].temp}}&deg;C</h2>
+                            <p class="lead">{{forecast[5].temp_min}}&deg;C | {{forecast[5].temp_max}}&deg;C</p>
+                            <hr />
+                            <i class="fas {{forecast[5].weather_icon}} fa-4x"></i>
+                            <p class="lead fw-bolder mb-0">{{forecast[5].weather_desc}}</p>
+                            <h7 class="lead">sunrise | {{forecast[5].sunrise.hour}}:{{forecast[5].sunrise.minute}}</h7><br>
+                            <h7>sunset | {{forecast[5].sunset.hour}}:{{forecast[5].sunset.minute}}</h7>
+                            <hr />
+                            <h2 class="fw-bolder">{{forecast[5].date.day}} {{forecast[5].date.month_name}}</h2>
+                            <hr />
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="bg-dark bg-opacity-50 py-2">
+                            <h2 class="card-title">{{forecast[6].temp}}&deg;C</h2>
+                            <p class="lead">{{forecast[6].temp_min}}&deg;C | {{forecast[6].temp_max}}&deg;C</p>
+                            <hr />
+                            <i class="fas {{forecast[6].weather_icon}} fa-4x"></i>
+                            <p class="lead fw-bolder mb-0">{{forecast[6].weather_desc}}</p>
+                            <h7 class="lead">sunrise | {{forecast[6].sunrise.hour}}:{{forecast[6].sunrise.minute}}</h7><br>
+                            <h7>sunset | {{forecast[6].sunset.hour}}:{{forecast[6].sunset.minute}}</h7>
+                            <hr />
+                            <h2 class="fw-bolder">{{forecast[6].date.day}} {{forecast[6].date.month_name}}</h2>
                             <hr />
                           </div>
                         </div>
