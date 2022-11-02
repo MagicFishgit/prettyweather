@@ -149,39 +149,35 @@ class Date:
 
 def get_icon(weather_main):
 
-    # Determine weather icon. For some reason python won't set the Clear condition value even if it is true but everything else it will.
-    weather_icon = "fa-sun"
-
+    # Determine weather icon.
     if weather_main == "Clear":
-        weather_icon == "fa-sun"
+         return  "fa-sun"
     elif weather_main == "Clouds":
-        weather_icon = "fa-cloud"
+         return "fa-cloud"
     elif weather_main == "Thunderstorm":
-        weather_icon = "fa-bolt"
+         return "fa-bolt"
     elif weather_main == "Drizzle":
-        weather_icon = "fa-cloud-rain"
+         return "fa-cloud-rain"
     elif weather_main == "Rain":
-        weather_icon = "fa-cloud-showers-heavy"
+         return "fa-cloud-showers-heavy"
     elif weather_main == "Snow":
-        weather_icon = "fa-snow-flake"
+         return "fa-snow-flake"
     elif weather_main == "Mist":
-        weather_icon = "fa-cloud-fog"
+         return "fa-cloud-fog"
     elif weather_main == "Smoke":
-        weather_icon = "fa-smoke"
+         return "fa-smoke"
     elif weather_main == "Haze":
-        weather_icon = "fa-sun-haze"
+         return "fa-sun-haze"
     elif weather_main == "Dust":
-        weather_icon = "fa-sun-dust"
+         return "fa-sun-dust"
     elif weather_main == "Fog":
-        weather_icon = "fa-cloud-fog"
+         return "fa-cloud-fog"
     elif weather_main == "Ash":
-        weather_icon = "fa-fire-smoke"
+         return "fa-fire-smoke"
     elif weather_main == "Squall":
-        weather_icon = "fa-cloud-bolt-sun"
+         return "fa-cloud-bolt-sun"
     else:
-        weather_icon = "fa-tornado"
-
-    return weather_icon
+         return "fa-tornado"
 
 
 class Pollution:
