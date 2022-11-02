@@ -7,7 +7,8 @@ import datetime
 
 API_KEY = openweather_api_key
 BASE_URL = "https://api.openweathermap.org/data/3.0/onecall"
-LOCATION_URL = "http://api.openweathermap.org/geo/1.0/direct" 
+LOCATION_URL = "http://api.openweathermap.org/geo/1.0/direct"
+POLLUTION_URL = "http://api.openweathermap.org/data/2.5/air_pollution" 
 
 views = Blueprint('views', __name__)
 
@@ -29,6 +30,7 @@ def base():
             data_lon = data[0]['lon']
 
             onecall_request_url = f"{BASE_URL}?lat={data_lat}&lon={data_lon}&exclude={exclude}&appid={API_KEY}"
+
             #Make onecall API call with location data
             response = requests.get(onecall_request_url)
 
@@ -46,8 +48,24 @@ def base():
             else:
                 print(response.status_code)
                 print(response.reason)
+
+            #Get pollution data.
+            pollution_request_url = f"{POLLUTION_URL}?lat={data_lat}&lon={data_lon}&appid={API_KEY}"
+            
+            #Make pollution api call with location data.
+            response = requests.get(pollution_request_url)
+
+            if response.status_code == 200:
+                data = response.json()
+
+                #Parse pollution data
+                pollution_data = Pollution(data)
+
+            else:
+                print(response.status_code)
+                print(response.reason)
                 
-            return render_template("base.html",longitude = data_lon, latitude = data_lat, curr_weather = curr_weather, forecast = forecast, location_name = search_location)
+            return render_template("base.html",longitude = data_lon, latitude = data_lat, curr_weather = curr_weather, forecast = forecast, location_name = search_location, poll_data = pollution_data)
         else:
             print(response.status_code)
             print(response.reason)
@@ -107,6 +125,28 @@ class Date:
         self.year = self.datetime_obj.year
         self.hour = self.datetime_obj.hour
         self.minute = self.datetime_obj.minute
+
+class Pollution:
+    def __init__(self, data):
+
+        self.aqi = data['list'][0]['main'].get('aqi') #Air Quality Index 1-5
+        self.aqi_desc = self.get_air_quality(self.aqi)
+        self.co = data['components'].get('co') #Carbon Monoxide
+        self.no = data['components'].get('no') #Nitrogen Dioxide
+        self.pm2_5 = data['components'].get('pm2_5') # Fine Particles matter
+        self.pm10 = data['components'].get('pm10') #Coarse particulate matter
+    
+    def get_air_quality(aqi):
+        if aqi == 1:
+            aqi_desc = "good"
+        elif aqi == 2:
+            aqi_desc = "Fair"
+        elif aqi == 3:
+            aqi_desc = "moderate"
+        elif aqi == 4:
+            aqi_desc = "poor"
+        else:
+            aqi_desc = "very poor"
     
     def get_month_name(self, month):
         
