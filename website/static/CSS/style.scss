@@ -20,8 +20,26 @@
     color: white;
 }
 
+.info-container-3 {
+    position: absolute;
+    width: 100vw;
+    bottom: 3%;
+    text-align: center;
+    color: white;
+}
+
+.info-container-3 .col-md-2 {
+    margin-left: 0.5%;
+    margin-top: 1.5%;
+    margin-bottom: 1.5%;
+}
+
 .input-group {
-    width: 22rem;
+    width: 30rem;
     margin-top: 3rem;
     position: relative;
+}
+
+.bg-dark {
+    border-radius: 10px;
 }

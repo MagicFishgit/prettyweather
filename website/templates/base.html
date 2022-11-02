@@ -142,7 +142,66 @@
                       </div>
                     </div>
                   </div>
-                </div> 
+                </div>
+                <div class="info-container-3">
+                  <div class="row">
+                    <div class="col-md-12 contain">
+                      <div class="bg-dark bg-opacity-50 py-3">
+                        <div class="row justify-content-center">
+                          <div class="col-md-2">
+                            <i class="fas fa-wind fa-3x"></i>
+                            <p class="lead fw-bolder mb-0">wind speed</p>
+                            <h7 class="lead">{{curr_weather.wind_speed}} m/sec</h7><br>
+                          </div>
+                          <div class="col-md-2">
+                            <i class="fas fa-compass fa-3x"></i>
+                            <p class="lead fw-bolder mb-0">wind direction</p>
+                            <h7 class="lead">{{curr_weather.wind_deg}}&deg;</h7><br>
+                          </div>
+                          <div class="col-md-2">
+                            <i class="fas fa-temperature-high fa-3x"></i>
+                            <p class="lead fw-bolder mb-0">humidity</p>
+                            <h7 class="lead">{{curr_weather.humidity}}%</h7><br>
+                          </div>
+                          <div class="col-md-2">
+                            <i class="fas fa-cloud-arrow-up fa-3x"></i>
+                            <p class="lead fw-bolder mb-0">cloudiness</p>
+                            <h7 class="lead">{{curr_weather.clouds}}%</h7><br>
+                          </div>
+                          <div class="col-md-2">
+                            <i class="fas fa-person-rays fa-3x"></i>
+                            <p class="lead fw-bolder mb-0">UV index</p>
+                            <h7 class="lead">{{curr_weather.uvi}}</h7><br>
+                          </div>
+                          <div class="col-md-2">
+                            <i class="fas fa-smog fa-3x"></i>
+                            <p class="lead fw-bolder mb-0">air quality</p>
+                            <h7 class="lead">moderate</h7><br>
+                          </div>
+                          <div class="col-md-2">
+                            <i class="fas fa-virus fa-3x"></i>
+                            <p class="lead fw-bolder mb-0">carbon monoxide</p>
+                            <h7 class="lead">200 &micro;g/&#x33A5;</h7><br>
+                          </div>
+                          <div class="col-md-2">
+                            <i class="fas fa-react fa-3x"></i>
+                            <p class="lead fw-bolder mb-0">nitrogen monoxide</p>
+                            <h7 class="lead">400 &micro;g&#x33A5;</h7><br>
+                          </div>
+                          <div class="col-md-2">
+                            <i class="fas fa-viruses fa-3x"></i>
+                            <p class="lead fw-bolder mb-0">fine particles</p>
+                            <h7 class="lead">256 &micro;g&#x33A5;</h7><br>
+                          </div>
+                          <div class="col-md-2">
+                            <i class="fas fa-certificate fa-3x"></i>
+                            <p class="lead fw-bolder mb-0">coarse particulate</p>
+                            <h7 class="lead">800 &micro;g&#x33A5;</h7><br>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
             </div>
         </div>
     {% endblock %}
