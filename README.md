@@ -13,7 +13,7 @@ Requirements: Python3.8 minimum, pip3
 1. Create Openweather account.
 2. Create API Key
 3. Create "creds.py" in root of project.
-4. Add ` openweather_api_key = "insert your key" ` in to creds.py in to creds.py
+4. Add ` openweather_api_key = "insert your key" ` in to creds.py.
 5. See requirement.txt and use ` pip3 install -r requirements.txt `
 6. Run the project by running main.py.
 
